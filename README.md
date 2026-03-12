@@ -3,6 +3,7 @@ I watched the video series by (g+)+ [https://www.youtube.com/watch?v=KzT9I1d-LlQ
 
 with my "tests" i ran 50M on my script which ran about 1.6s on my i5-6600 while (g+)+'s 5M ran about 2.5s and i was too impatient to check 50M on his
 EDIT: Added karatsuba-type multiplication and mine runs in around 1.3s now
+EDIT: Changed the way numbers were represented, about 0.75s now
 
 ## Quickstart?
 run:
