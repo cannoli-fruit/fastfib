@@ -29,12 +29,12 @@ square x =
 phix :: Qadsqrt5 -> Qadsqrt5
 phix x =
   let amb = phi x - phb x in
-  Qadsqrt5 (2 * amb) (amb)
+  Qadsqrt5 (phi x + amb) (amb)
 
 phbx :: Qadsqrt5 -> Qadsqrt5
 phbx x =
   let bma = phb x - phi x in
-  Qadsqrt5 (bma)  (2 * bma)
+  Qadsqrt5 (bma)  (phb x + bma)
 
 phipow :: Integer -> Qadsqrt5
 phipow n
