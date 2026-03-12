@@ -10,9 +10,18 @@ data Qadsqrt5 = Qadsqrt5 {
 
 instance Num Qadsqrt5 where
   a + b = Qadsqrt5 (rat a + rat b) (irr a + irr b)
-  a * b = Qadsqrt5
-    (rat a * rat b + 5 * irr a * irr b)
-    (irr a * rat b + rat a * irr b)
+  -- Normal Method
+  -- a * b = Qadsqrt5
+  --  (rat a * rat b + 5 * irr a * irr b)
+  --  (irr a * rat b + rat a * irr b)
+  -- Karatsuba-ish
+  a * b =
+    let p = rat a * rat b
+        q = irr a * irr b
+        r = (rat a + irr a) * (rat b + irr b)
+    in Qadsqrt5
+        (p + 5*q)
+        (r - p - q)
  
   negate x = Qadsqrt5 (-rat x) (-irr x)
   abs x = undefined
@@ -25,6 +34,7 @@ instance Fractional Qadsqrt5 where
     in Qadsqrt5 (c / denom) (-d / denom)
   fromRational r =
     Qadsqrt5 (fromRational r) 0
+
 
 pow :: Qadsqrt5 -> Integer -> Qadsqrt5
 pow x n
@@ -42,7 +52,7 @@ fibonacci x =
       phi = (1 + r5) / 2
       phi2 = (1 - r5) / 2
   in
-    ( (pow phi power) - (pow phi2 power) ) / r5
+    ((pow phi power) - (pow phi2 power)) / r5
 
 main :: IO()
 main = do
@@ -51,7 +61,7 @@ main = do
   startTime <- getCurrentTime
   let y = fibonacci idx
   let num = numerator $ rat y
-  num `deepseq` return ()     -- force computation
+  num `deepseq` return ()
   endTime <- getCurrentTime
   -- let den = denominator $ rat y
   --
